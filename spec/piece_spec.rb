@@ -2,37 +2,39 @@
 
 require_relative '../lib/piece'
 
-describe WhitePiece do
+describe YellowPiece do
   before(:each) do
-    @white_piece = WhitePiece.new
+    @yellow_piece = YellowPiece.new
   end
 
   context '#initialize' do
-    it 'has a color of white' do
-      expect(@white_piece.color).to eq 'white'
+    it 'has a color of yellow' do
+      expect(@yellow_piece.color).to eq 'yellow'
     end
   end
 
   context '#display' do
-    it 'can display a white circle in the command line representing the piece' do
-      expect { puts @white_piece.display }.to output("\u25CF\n").to_stdout
+    it 'can display a yellow circle in the command line representing the piece' do
+      yellow_dot = "\u25CF".colorize(:yellow)
+      expect(@yellow_piece.display).to eq yellow_dot
     end
   end
 end
 
-describe BlackPiece do
+describe RedPiece do
   before(:each) do
-    @black_piece = BlackPiece.new
+    @red_piece = RedPiece.new
   end
   context '#initialize' do
-    it 'has a color of black' do
-      expect(@black_piece.color).to eq 'black'
+    it 'has a color of red' do
+      expect(@red_piece.color).to eq 'red'
     end
   end
 
   context '#display' do
-    it 'can display a black circle in the command line representing the piece' do
-      expect { puts @black_piece.display }.to output("\u25CB\n").to_stdout
+    it 'can display a red circle in the command line representing the piece' do
+      red_dot = "\u25CF".colorize(:red)
+      expect(@red_piece.display).to eq red_dot
     end
   end
 end

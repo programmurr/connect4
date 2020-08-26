@@ -1,23 +1,25 @@
 # frozen_string_literal: true
 
-class WhitePiece
+require 'colorize'
+
+class YellowPiece
   attr_reader :color
   def initialize
-    @color = 'white'
+    @color = 'yellow'
   end
 
   def display
-    "\u25CF"
+    "\u25CF".colorize(:yellow)
   end
 end
 
-class BlackPiece
+class RedPiece
   attr_reader :color
   def initialize
-    @color = 'black'
+    @color = 'red'
   end
 
   def display
-    "\u25CB"
+    "\u25CF".colorize(:red)
   end
 end

@@ -29,20 +29,19 @@ describe Game do
     before(:each) do
       @game = Game.new
       @game.board.set_cell_coordinates
-      @game.player1.assign_white_piece
-      @game.player2.assign_black_piece
+      @game.player1.assign_yellow_piece
+      @game.player2.assign_red_piece
     end
 
     it 'can put a player piece to the bottom of the selected row if the row is empty' do
       @game.put_piece_in_column(1, @game.player1.piece)
-      expect(@game.board.grid[5][0].value).to be_instance_of(WhitePiece)
+      expect(@game.board.grid[5][0].value).to be_instance_of(YellowPiece)
     end
 
     it 'can put a player piece on top of a piece already in the row' do
       @game.put_piece_in_column(1, @game.player1.piece)
       @game.put_piece_in_column(1, @game.player2.piece)
-      binding.pry
-      expect(@game.board.grid[4][0].value).to be_instance_of(BlackPiece)
+      expect(@game.board.grid[4][0].value).to be_instance_of(RedPiece)
     end
 
     it 'does not place a piece and outputs a message if the column is full' do

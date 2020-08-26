@@ -9,11 +9,11 @@ class Player
     @piece = nil
   end
 
-  def assign_white_piece
-    self.piece = WhitePiece.new
+  def assign_yellow_piece
+    self.piece = YellowPiece.new
   end
 
-  def assign_black_piece
-    self.piece = BlackPiece.new
+  def assign_red_piece
+    self.piece = RedPiece.new
   end
 end

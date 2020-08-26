@@ -62,8 +62,8 @@ describe Board do
     it 'returns true if the row is full of pieces' do
       game = Game.new
       game.board.set_cell_coordinates
-      game.player1.assign_white_piece
-      game.player2.assign_black_piece
+      game.player1.assign_yellow_piece
+      game.player2.assign_red_piece
       game.put_piece_in_column(2, game.player1.piece)
       game.put_piece_in_column(2, game.player2.piece)
       game.put_piece_in_column(2, game.player1.piece)
@@ -78,8 +78,8 @@ describe Board do
     it 'returns true if the board is full of pieces' do
       game = Game.new
       game.board.set_cell_coordinates
-      game.player1.assign_white_piece
-      game.player2.assign_black_piece
+      game.player1.assign_yellow_piece
+      game.player2.assign_red_piece
       game.put_piece_in_column(1, game.player1.piece)
       game.put_piece_in_column(1, game.player2.piece)
       game.put_piece_in_column(1, game.player1.piece)
@@ -128,8 +128,8 @@ describe Board do
     it 'returns false if the board is not full of pieces' do
       game = Game.new
       game.board.set_cell_coordinates
-      game.player1.assign_white_piece
-      game.player2.assign_black_piece
+      game.player1.assign_yellow_piece
+      game.player2.assign_red_piece
       game.put_piece_in_column(1, game.player1.piece)
       game.put_piece_in_column(1, game.player2.piece)
       game.put_piece_in_column(3, game.player1.piece)

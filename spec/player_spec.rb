@@ -23,17 +23,17 @@ describe Player do
     end
   end
 
-  context '#assign_white_piece' do
-    it 'can assign the white piece object to the piece of the player' do
-      @player2.assign_white_piece
-      expect(@player2.piece).to be_instance_of(WhitePiece)
+  context '#assign_yellow_piece' do
+    it 'can assign the yellow piece object to the piece of the player' do
+      @player2.assign_yellow_piece
+      expect(@player2.piece).to be_instance_of(YellowPiece)
     end
   end
 
-  context '#assign_black_piece' do
-    it 'can assign the black piece object to the piece of the player' do
-      @player1.assign_black_piece
-      expect(@player1.piece).to be_instance_of(BlackPiece)
+  context '#assign_red_piece' do
+    it 'can assign the red piece object to the piece of the player' do
+      @player1.assign_red_piece
+      expect(@player1.piece).to be_instance_of(RedPiece)
     end
   end
 end
