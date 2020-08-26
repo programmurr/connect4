@@ -15,17 +15,15 @@ class Game
     @active_player = nil
   end
 
-  def put_piece_in_row(row_num, piece); end
-
-  def set_cell_coordinates
-    x = 0
-    while x < 6
-      y = 0
-      while y < 7
-        board.grid[x][y].co_ord = [x + 1, y + 1]
-        y += 1
+  def put_piece_in_column(col_num, piece)
+    board.get_column(col_num).map do |cell|
+      if cell.value.nil?
+        cell.value = piece
+        break
+      elsif board.column_full?(board.get_column(col_num)) == true
+        puts 'The column is full!'
+        break
       end
-      x += 1
     end
   end
 end

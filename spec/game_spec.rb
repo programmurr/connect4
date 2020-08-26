@@ -25,36 +25,40 @@ describe Game do
     end
   end
 
-  context '#set_cell_coordinates' do
-    before(:each) do
-      @game = Game.new
-      @game.set_cell_coordinates
-    end
-
-    it 'assigns a coordinate to each cell on the board' do
-      @game.board.grid.each do |row| # Law of Demeter? Look up refactoring pattern
-        row.each do |cell|
-          expect(cell.co_ord).to be_instance_of(Array)
-        end
-      end
-    end
-  end
-
   context '#put_piece_in_row' do
     before(:each) do
       @game = Game.new
-      @game.set_cell_coordinates
+      @game.board.set_cell_coordinates
       @game.player1.assign_white_piece
+      @game.player2.assign_black_piece
     end
 
     it 'can put a player piece to the bottom of the selected row if the row is empty' do
-      @game.put_piece_in_row(1, @game.player1.piece)
-      expect(@game.board.grid[0][0].value).to eq 'white'
+      @game.put_piece_in_column(1, @game.player1.piece)
+      expect(@game.board.grid[5][0].value).to be_instance_of(WhitePiece)
     end
 
-    xit 'can put a player piece on top of a piece already in the row' do
-      @game.put_piece_in_row(1, @game.player1.piece)
-      expect(@game.board.grid[0][1].value).to eq 'white'
+    it 'can put a player piece on top of a piece already in the row' do
+      @game.put_piece_in_column(1, @game.player1.piece)
+      @game.put_piece_in_column(1, @game.player2.piece)
+      binding.pry
+      expect(@game.board.grid[4][0].value).to be_instance_of(BlackPiece)
+    end
+
+    it 'does not place a piece and outputs a message if the column is full' do
+      @game.put_piece_in_column(2, @game.player1.piece)
+      @game.put_piece_in_column(2, @game.player2.piece)
+      @game.put_piece_in_column(2, @game.player1.piece)
+      @game.put_piece_in_column(2, @game.player2.piece)
+      @game.put_piece_in_column(2, @game.player1.piece)
+      @game.put_piece_in_column(2, @game.player2.piece)
+      @game.put_piece_in_column(2, @game.player1.piece)
+      expect { @game.put_piece_in_column(2, @game.player2.piece) }.to output("The column is full!\n").to_stdout
+    end
+  end
+
+  context '#calculate_winning_patterns' do
+    xit 'can calculate all of the winning pattens from one piece placed on the board' do
     end
   end
 end
