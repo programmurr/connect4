@@ -3,7 +3,7 @@
 require 'pry'
 
 module WinPositions
-  def calculate_win_positions(position, grid)
+  def calculate_win_positions(position, grid, color)
     win_positions = []
     win_positions << up_combo(position)
     win_positions << up_right_combo(position)
@@ -13,27 +13,27 @@ module WinPositions
     win_positions << down_left_combo(position)
     win_positions << left_combo(position)
     win_positions << up_left_combo(position)
-    remove_invalid_positions(win_positions, grid)
+    remove_invalid_positions(win_positions, grid, color)
   end
 
-  def remove_invalid_positions(win_positions, grid)
+  def remove_invalid_positions(win_positions, grid, color)
     win_positions.each do |combo|
       combo.delete_if { |co_ord| co_ord[0] > 7 || co_ord[1] > 7 }
       combo.delete_if { |co_ord| co_ord[0] < 1 || co_ord[1] < 1 }
     end
     win_positions.delete_if { |combo| combo.length < 3 }
-    remove_nil_or_opponent_pieces(win_positions, grid)
+    remove_nil_or_opponent_pieces(win_positions, grid, color)
   end
 
   # TODO: move the reduce_grid operation
-  def remove_nil_or_opponent_pieces(win_positions, grid)
+  def remove_nil_or_opponent_pieces(win_positions, grid, color)
     reduced_grid = grid.map do |row|
       row.reject { |cell| cell.value.nil? }
     end
     reduced_grid.reject!(&:empty?).flatten!
     win_positions.each do |combo|
       reduced_grid.each do |cell|
-        combo.delete_if { |coord| coord == cell.co_ord }
+        combo.delete_if { |coord| coord == cell.co_ord && cell.value.color != color }
       end
     end
     win_positions.delete_if { |combo| combo.length < 3 }

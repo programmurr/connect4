@@ -25,7 +25,7 @@ class Player
     current_positions = []
     placement.each_value { |cell| current_positions << cell.co_ord }
     current_positions.each do |position|
-      win_combos[position] = calculate_win_positions(position, grid)
+      win_combos[position] = calculate_win_positions(position, grid, piece.color)
     end
     win_combos
   end
