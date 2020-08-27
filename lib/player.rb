@@ -6,7 +6,7 @@ require_relative 'board'
 require_relative 'cell'
 
 class Player
-  include WinPositions
+  include WinPositions # Comes into play in calculate_win_positions
 
   attr_accessor :name, :piece, :win_combos, :placement
 

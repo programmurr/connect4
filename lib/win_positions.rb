@@ -25,11 +25,18 @@ module WinPositions
     remove_nil_or_opponent_pieces(win_positions, grid)
   end
 
-  def remove_nil_or_opponent_pieces(_win_positions, grid)
-    new_grid = grid.map do |row|
+  # TODO: move the reduce_grid operation
+  def remove_nil_or_opponent_pieces(win_positions, grid)
+    reduced_grid = grid.map do |row|
       row.reject { |cell| cell.value.nil? }
     end
-    binding.pry
+    reduced_grid.reject!(&:empty?).flatten!
+    win_positions.each do |combo|
+      reduced_grid.each do |cell|
+        combo.delete_if { |coord| coord == cell.co_ord }
+      end
+    end
+    win_positions.delete_if { |combo| combo.length < 3 }
   end
 
   def up_combo(position)

@@ -67,5 +67,34 @@ describe Player do
                                          [[5, 3], [4, 2], [3, 1]]] }
       expect(@game.active_player.winning_patterns(@game.board.grid)).to eq winning_coordinates
     end
+
+    it 'can calculate all of the winning pattens from multiple pieces present on the board' do
+      @game.active_player = @game.player1
+      @game.put_piece_in_column(4, @game.player1)
+      @game.put_piece_in_column(5, @game.player2)
+      @game.put_piece_in_column(6, @game.player1)
+      winning_coordinates = { [6, 4] => [[[5, 4], [4, 4], [3, 4]],
+                                         [[5, 5], [4, 6], [3, 7]],
+                                         [[6, 3], [6, 2], [6, 1]],
+                                         [[5, 3], [4, 2], [3, 1]]],
+                              [6, 6] => [[[5, 6], [4, 6], [3, 6]],
+                                         [[5, 5], [4, 4], [3, 3]]] }
+      expect(@game.active_player.winning_patterns(@game.board.grid)).to eq winning_coordinates
+    end
+
+    it 'does not remove winning combinations including same-colored pieces' do
+      @game.active_player = @game.player1
+      @game.put_piece_in_column(4, @game.player1)
+      @game.put_piece_in_column(5, @game.player2)
+      @game.put_piece_in_column(1, @game.player1)
+      winning_coordinates = { [6, 4] => [[[5, 4], [4, 4], [3, 4]],
+                                         [[5, 5], [4, 6], [3, 7]],
+                                         [[6, 3], [6, 2], [6, 1]],
+                                         [[5, 3], [4, 2], [3, 1]]],
+                              [6, 1] => [[[5, 1], [4, 1], [3, 1]],
+                                         [[5, 2], [4, 3], [3, 4]],
+                                         [[6, 2], [6, 3], [6, 4]]] }
+      expect(@game.active_player.winning_patterns(@game.board.grid)).to eq winning_coordinates
+    end
   end
 end
