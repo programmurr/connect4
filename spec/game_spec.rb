@@ -55,4 +55,52 @@ describe Game do
       expect { @game.put_piece_in_column(2, @game.player2) }.to output("The column is full!\n").to_stdout
     end
   end
+
+  context '#winning_pattern_detected?' do
+    before(:each) do
+      @game = Game.new
+      @game.board.set_cell_coordinates
+      @game.player1.assign_yellow_piece
+      @game.player2.assign_red_piece
+    end
+
+    it 'can detect a winning pattern in a vertical direction' do
+      @game.active_player = @game.player1
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(2, @game.player2)
+      @game.put_piece_in_column(2, @game.player2)
+      @game.put_piece_in_column(2, @game.player2)
+      expect(@game.winning_pattern_detected?).to eq true
+    end
+
+    xit 'can detect a winning pattern in a horizontal direction' do
+      @game.active_player = @game.player1
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(2, @game.player1)
+      @game.put_piece_in_column(3, @game.player1)
+      @game.put_piece_in_column(4, @game.player1)
+      @game.put_piece_in_column(3, @game.player2)
+      @game.put_piece_in_column(4, @game.player2)
+      @game.put_piece_in_column(5, @game.player2)
+      expect(@game.winning_pattern_detected?).to eq true
+    end
+
+    xit 'can detect a winning pattern in a diagonalal direction' do
+      @game.active_player = @game.player1
+      @game.put_piece_in_column(7, @game.player1)
+      @game.put_piece_in_column(6, @game.player2)
+      @game.put_piece_in_column(6, @game.player1)
+      @game.put_piece_in_column(5, @game.player2)
+      @game.put_piece_in_column(5, @game.player1)
+      @game.put_piece_in_column(5, @game.player1)
+      @game.put_piece_in_column(4, @game.player2)
+      @game.put_piece_in_column(4, @game.player2)
+      @game.put_piece_in_column(4, @game.player2)
+      @game.put_piece_in_column(4, @game.player1)
+      expect(@game.winning_pattern_detected?).to eq true
+    end
+  end
 end
