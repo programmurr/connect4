@@ -4,18 +4,7 @@ require 'colorize'
 require 'pry'
 require_relative '../lib/cell'
 
-class Piece
-  attr_accessor :placement
-  def initialize
-    @placement = {}
-  end
-
-  def tag_piece(cell)
-    placement[placement.length + 1] = cell
-  end
-end
-
-class YellowPiece < Piece
+class YellowPiece
   attr_reader :color
   def initialize
     super
@@ -27,7 +16,7 @@ class YellowPiece < Piece
   end
 end
 
-class RedPiece < Piece
+class RedPiece
   attr_reader :color
   def initialize
     super

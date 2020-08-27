@@ -2,24 +2,32 @@
 
 require_relative 'piece'
 require_relative 'win_positions'
+require_relative 'board'
+require_relative 'cell'
 
 class Player
   include WinPositions
 
-  attr_accessor :name, :piece, :win_combos
+  attr_accessor :name, :piece, :win_combos, :placement
 
   def initialize(num)
     @name = "Player#{num}"
     @piece = nil
     @win_combos = {}
+    @placement = {}
   end
 
-  def calculate_winning_patterns
+  def tag_piece(cell)
+    placement[placement.length + 1] = cell
+  end
+
+  def winning_patterns(grid)
     current_positions = []
-    piece.placement.each_value { |cell| current_positions << cell.co_ord }
+    placement.each_value { |cell| current_positions << cell.co_ord }
     current_positions.each do |position|
-      win_combos[position] = calculate_win_positions(position)
+      win_combos[position] = calculate_win_positions(position, grid)
     end
+    win_combos
   end
 
   def assign_yellow_piece

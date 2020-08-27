@@ -2,6 +2,8 @@
 
 require 'pry'
 require_relative 'cell'
+require_relative 'piece'
+require_relative 'game'
 
 class Board
   COLUMNS = {
@@ -59,6 +61,9 @@ class Board
     Array.new(6) { Array.new(7) { Cell.new } }
   end
 
+  # BEWARE - I accidentally set the x and y coords in reverse.
+  # So after the below function is run, y is actually first in all coords
+  # Sorry. Was in too deep before realizing this
   def set_cell_coordinates
     x = 0
     while x < 6

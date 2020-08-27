@@ -34,25 +34,25 @@ describe Game do
     end
 
     it 'can put a player piece to the bottom of the selected row if the row is empty' do
-      @game.put_piece_in_column(1, @game.player1.piece)
-      expect(@game.board.grid[5][0].value).to eq 'yellow'
+      @game.put_piece_in_column(1, @game.player1)
+      expect(@game.board.grid[5][0].value).to be_instance_of(YellowPiece)
     end
 
     it 'can put a player piece on top of a piece already in the row' do
-      @game.put_piece_in_column(1, @game.player1.piece)
-      @game.put_piece_in_column(1, @game.player2.piece)
-      expect(@game.board.grid[4][0].value).to eq 'red'
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(1, @game.player2)
+      expect(@game.board.grid[4][0].value).to be_instance_of(RedPiece)
     end
 
     it 'does not place a piece and outputs a message if the column is full' do
-      @game.put_piece_in_column(2, @game.player1.piece)
-      @game.put_piece_in_column(2, @game.player2.piece)
-      @game.put_piece_in_column(2, @game.player1.piece)
-      @game.put_piece_in_column(2, @game.player2.piece)
-      @game.put_piece_in_column(2, @game.player1.piece)
-      @game.put_piece_in_column(2, @game.player2.piece)
-      @game.put_piece_in_column(2, @game.player1.piece)
-      expect { @game.put_piece_in_column(2, @game.player2.piece) }.to output("The column is full!\n").to_stdout
+      @game.put_piece_in_column(2, @game.player1)
+      @game.put_piece_in_column(2, @game.player2)
+      @game.put_piece_in_column(2, @game.player1)
+      @game.put_piece_in_column(2, @game.player2)
+      @game.put_piece_in_column(2, @game.player1)
+      @game.put_piece_in_column(2, @game.player2)
+      @game.put_piece_in_column(2, @game.player1)
+      expect { @game.put_piece_in_column(2, @game.player2) }.to output("The column is full!\n").to_stdout
     end
   end
 end
