@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../lib/player'
+require_relative '../lib/game'
 
 describe Player do
   before(:each) do
@@ -34,6 +35,26 @@ describe Player do
     it 'can assign the red piece object to the piece of the player' do
       @player1.assign_red_piece
       expect(@player1.piece).to be_instance_of(RedPiece)
+    end
+  end
+
+  context '#calculate_winning_patterns' do
+    before(:each) do
+      @game = Game.new
+      @game.board.set_cell_coordinates
+      @game.player1.assign_yellow_piece
+      @game.player2.assign_red_piece
+    end
+
+    it 'can calculate all of the winning pattens from one piece placed on the board' do
+      @game.active_player = @game.player1
+      @game.put_piece_in_column(4, @game.player1.piece)
+      winning_coordinates = [[[5, 4], [4, 4], [3, 4]],
+                             [[5, 5], [4, 6], [3, 7]],
+                             [[6, 5], [6, 6], [6, 7]],
+                             [[6, 3], [6, 2], [6, 1]],
+                             [[5, 3], [4, 2], [3, 1]]]
+      expect(@game.active_player.calculate_winning_patterns).to eq winning_coordinates
     end
   end
 end

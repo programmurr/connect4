@@ -1,10 +1,24 @@
 # frozen_string_literal: true
 
 require 'colorize'
+require 'pry'
+require_relative '../lib/cell'
 
-class YellowPiece
+class Piece
+  attr_accessor :placement
+  def initialize
+    @placement = {}
+  end
+
+  def tag_piece(cell)
+    placement[placement.length + 1] = cell
+  end
+end
+
+class YellowPiece < Piece
   attr_reader :color
   def initialize
+    super
     @color = 'yellow'
   end
 
@@ -13,9 +27,10 @@ class YellowPiece
   end
 end
 
-class RedPiece
+class RedPiece < Piece
   attr_reader :color
   def initialize
+    super
     @color = 'red'
   end
 

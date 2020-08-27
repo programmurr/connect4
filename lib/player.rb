@@ -1,12 +1,25 @@
 # frozen_string_literal: true
 
 require_relative 'piece'
+require_relative 'win_positions'
 
 class Player
-  attr_accessor :name, :piece
+  include WinPositions
+
+  attr_accessor :name, :piece, :win_combos
+
   def initialize(num)
     @name = "Player#{num}"
     @piece = nil
+    @win_combos = {}
+  end
+
+  def calculate_winning_patterns
+    current_positions = []
+    piece.placement.each_value { |cell| current_positions << cell.co_ord }
+    current_positions.each do |position|
+      win_combos[position] = calculate_win_positions(position)
+    end
   end
 
   def assign_yellow_piece

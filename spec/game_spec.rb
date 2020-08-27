@@ -35,13 +35,13 @@ describe Game do
 
     it 'can put a player piece to the bottom of the selected row if the row is empty' do
       @game.put_piece_in_column(1, @game.player1.piece)
-      expect(@game.board.grid[5][0].value).to be_instance_of(YellowPiece)
+      expect(@game.board.grid[5][0].value).to eq 'yellow'
     end
 
     it 'can put a player piece on top of a piece already in the row' do
       @game.put_piece_in_column(1, @game.player1.piece)
       @game.put_piece_in_column(1, @game.player2.piece)
-      expect(@game.board.grid[4][0].value).to be_instance_of(RedPiece)
+      expect(@game.board.grid[4][0].value).to eq 'red'
     end
 
     it 'does not place a piece and outputs a message if the column is full' do
@@ -53,11 +53,6 @@ describe Game do
       @game.put_piece_in_column(2, @game.player2.piece)
       @game.put_piece_in_column(2, @game.player1.piece)
       expect { @game.put_piece_in_column(2, @game.player2.piece) }.to output("The column is full!\n").to_stdout
-    end
-  end
-
-  context '#calculate_winning_patterns' do
-    xit 'can calculate all of the winning pattens from one piece placed on the board' do
     end
   end
 end

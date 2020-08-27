@@ -18,7 +18,8 @@ class Game
   def put_piece_in_column(col_num, piece)
     board.get_column(col_num).map do |cell|
       if cell.value.nil?
-        cell.value = piece
+        cell.value = piece.color
+        piece.tag_piece(cell)
         break
       elsif board.column_full?(board.get_column(col_num)) == true
         puts 'The column is full!'
