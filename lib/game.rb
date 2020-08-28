@@ -15,7 +15,9 @@ class Game
     @active_player = nil
   end
 
-  def winning_pattern_detected?; end
+  def winning_pattern_detected?
+    board.scan_cells(active_player)
+  end
 
   def put_piece_in_column(col_num, player)
     board.get_column(col_num).map do |cell|

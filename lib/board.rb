@@ -4,8 +4,10 @@ require 'pry'
 require_relative 'cell'
 require_relative 'piece'
 require_relative 'game'
+require_relative 'adjascent_cell'
 
 class Board
+  include AdjascentCells
   COLUMNS = {
     1 => [[1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1]],
     2 => [[1, 2], [2, 2], [3, 2], [4, 2], [5, 2], [6, 2]],
@@ -17,8 +19,48 @@ class Board
   }.freeze
 
   attr_accessor :grid
+
   def initialize(grid: default_grid)
     @grid = grid
+  end
+
+  def diagonal_win?(cell, active_player)
+    down_right = []
+    down_left = []
+    x = cell.co_ord[0] - 1
+    y = cell.co_ord[0] + 2
+    z = x + 1
+
+    x.upto(y) { |num| down_right << grid[num][num + 1] }
+
+    x.upto(y) do
+      down_left << grid[x][z]
+      x += 1
+      z -= 1
+    end
+    counter = 0
+    down_right.each do |position|
+      counter += 1 if position.value.color == active_player.piece.color
+    end
+    return true if counter == 4
+
+    counter = 0
+    down_left.each do |position|
+      counter += 1 if position.value.color == active_player.piece.color
+    end
+    return true if counter == 4
+  end
+
+  def scan_cells(active_player)
+    grid.each do |row|
+      row.each do |cell|
+        if cell.value
+          return true if diagonal_win?(cell, active_player) == true
+        else
+          next
+        end
+      end
+    end
   end
 
   def full?
@@ -62,7 +104,7 @@ class Board
   end
 
   # BEWARE - I accidentally set the x and y coords in reverse.
-  # So after the below function is run, y is actually first in all coords
+  # So after the below function is run, y is actually first in all cell/board coords
   # Sorry. Was in too deep before realizing this
   def set_cell_coordinates
     x = 0
