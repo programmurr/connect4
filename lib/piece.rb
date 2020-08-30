@@ -2,7 +2,7 @@
 
 require 'colorize'
 require 'pry'
-require_relative '../lib/cell'
+require_relative 'cell'
 
 class YellowPiece
   attr_reader :color

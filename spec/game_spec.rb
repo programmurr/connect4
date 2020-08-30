@@ -64,7 +64,7 @@ describe Game do
       @game.player2.assign_red_piece
     end
 
-    xit 'can detect a winning pattern in a vertical direction' do
+    it 'can detect a winning pattern in a vertical direction' do
       @game.active_player = @game.player1
       @game.put_piece_in_column(1, @game.player1)
       @game.put_piece_in_column(1, @game.player1)
@@ -73,7 +73,6 @@ describe Game do
       @game.put_piece_in_column(2, @game.player2)
       @game.put_piece_in_column(2, @game.player2)
       @game.put_piece_in_column(2, @game.player2)
-      @game.active_player.winning_patterns(@game.board.grid)
       expect(@game.winning_pattern_detected?).to eq true
     end
 
@@ -86,7 +85,6 @@ describe Game do
       @game.put_piece_in_column(3, @game.player2)
       @game.put_piece_in_column(4, @game.player2)
       @game.put_piece_in_column(5, @game.player2)
-      @game.active_player.winning_patterns(@game.board.grid)
       expect(@game.winning_pattern_detected?).to eq true
     end
 
@@ -102,7 +100,6 @@ describe Game do
       @game.put_piece_in_column(4, @game.player2)
       @game.put_piece_in_column(4, @game.player2)
       @game.put_piece_in_column(4, @game.player1)
-      @game.active_player.winning_patterns(@game.board.grid)
       expect(@game.winning_pattern_detected?).to eq true
     end
 
@@ -118,7 +115,6 @@ describe Game do
       @game.put_piece_in_column(4, @game.player2)
       @game.put_piece_in_column(4, @game.player2)
       @game.put_piece_in_column(4, @game.player1)
-      @game.active_player.winning_patterns(@game.board.grid)
       expect(@game.winning_pattern_detected?).to eq true
     end
 
@@ -130,7 +126,6 @@ describe Game do
       @game.put_piece_in_column(5, @game.player2)
       @game.put_piece_in_column(5, @game.player1)
       @game.put_piece_in_column(5, @game.player1)
-      @game.active_player.winning_patterns(@game.board.grid)
       expect(@game.winning_pattern_detected?).to eq false
     end
 
@@ -142,8 +137,6 @@ describe Game do
       @game.put_piece_in_column(4, @game.player2)
       @game.put_piece_in_column(4, @game.player1)
       @game.put_piece_in_column(7, @game.player1)
-      @game.board.display_board
-      @game.active_player.winning_patterns(@game.board.grid)
       expect(@game.winning_pattern_detected?).to eq false
     end
   end

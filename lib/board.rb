@@ -4,10 +4,8 @@ require 'pry'
 require_relative 'cell'
 require_relative 'piece'
 require_relative 'game'
-require_relative 'adjascent_cell'
 
 class Board
-  include AdjascentCells
   COLUMNS = {
     1 => [[1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1]],
     2 => [[1, 2], [2, 2], [3, 2], [4, 2], [5, 2], [6, 2]],
