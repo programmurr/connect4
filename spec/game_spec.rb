@@ -76,6 +76,17 @@ describe Game do
       expect(@game.winning_pattern_detected?).to eq true
     end
 
+    it 'returns false if no vertical win pattern' do
+      @game.active_player = @game.player1
+      @game.put_piece_in_column(3, @game.player1)
+      @game.put_piece_in_column(3, @game.player1)
+      @game.put_piece_in_column(3, @game.player1)
+      @game.put_piece_in_column(4, @game.player2)
+      @game.put_piece_in_column(4, @game.player2)
+      @game.put_piece_in_column(2, @game.player2)
+      expect(@game.winning_pattern_detected?).to eq false
+    end
+
     xit 'can detect a winning pattern in a horizontal direction' do
       @game.active_player = @game.player1
       @game.put_piece_in_column(1, @game.player1)
@@ -118,7 +129,7 @@ describe Game do
       expect(@game.winning_pattern_detected?).to eq true
     end
 
-    it 'does not error if checking a combination near the edge of the board' do
+    it 'does not error if checking a non-win combination near the edge of the board' do
       @game.active_player = @game.player1
       @game.put_piece_in_column(7, @game.player1)
       @game.put_piece_in_column(6, @game.player2)
