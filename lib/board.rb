@@ -24,43 +24,63 @@ class Board
     @grid = grid
   end
 
-  def diagonal_win?(cell, active_player)
+  def make_down_right_array(x_co_ord, y_co_ord)
     down_right = []
+    x_co_ord.upto(y_co_ord) do |num|
+      break if num > 5
+
+      down_right << grid[num][num + 1]
+    end
+    down_right
+  end
+
+  def make_down_left_array(x_co_ord, y_co_ord, z_co_ord)
     down_left = []
-    x = cell.co_ord[0] - 1
-    y = cell.co_ord[0] + 2
-    z = x + 1
+    x_co_ord.upto(y_co_ord) do
+      break if x_co_ord > 5
 
-    x.upto(y) { |num| down_right << grid[num][num + 1] }
-
-    x.upto(y) do
-      down_left << grid[x][z]
-      x += 1
-      z -= 1
+      down_left << grid[x_co_ord][z_co_ord]
+      x_co_ord += 1
+      z_co_ord -= 1
     end
-    counter = 0
-    down_right.each do |position|
-      counter += 1 if position.value.color == active_player.piece.color
-    end
-    return true if counter == 4
+    down_left
+  end
 
-    counter = 0
-    down_left.each do |position|
-      counter += 1 if position.value.color == active_player.piece.color
+  def win_check?(array, active_player, counter)
+    array.each do |position|
+      if position.value.nil?
+        next
+      elsif position.value.color == active_player.piece.color
+        counter += 1
+      else
+        next
+      end
     end
     return true if counter == 4
   end
 
-  def scan_cells(active_player)
+  def diagonal_win?(x_co_ord, y_co_ord, active_player)
+    z_co_ord = x_co_ord + 1
+    right_counter = 0
+    left_counter = 0
+    down_left = make_down_left_array(x_co_ord, y_co_ord, z_co_ord)
+    down_right = make_down_right_array(x_co_ord, y_co_ord)
+
+    return true if win_check?(down_right, active_player, right_counter) == true
+    return true if win_check?(down_left, active_player, left_counter) == true
+  end
+
+  def scan_diagonal_cells(active_player)
     grid.each do |row|
       row.each do |cell|
         if cell.value
-          return true if diagonal_win?(cell, active_player) == true
+          return true if diagonal_win?(cell.co_ord[0] - 1, cell.co_ord[1] + 2, active_player) == true
         else
           next
         end
       end
     end
+    false
   end
 
   def full?

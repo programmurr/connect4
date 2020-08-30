@@ -90,7 +90,7 @@ describe Game do
       expect(@game.winning_pattern_detected?).to eq true
     end
 
-    it 'can detect a winning pattern in a diagonalal direction' do
+    it 'can detect a winning pattern in a diagonal direction' do
       @game.active_player = @game.player1
       @game.put_piece_in_column(7, @game.player1)
       @game.put_piece_in_column(6, @game.player2)
@@ -104,6 +104,47 @@ describe Game do
       @game.put_piece_in_column(4, @game.player1)
       @game.active_player.winning_patterns(@game.board.grid)
       expect(@game.winning_pattern_detected?).to eq true
+    end
+
+    it 'can detect a winning pattern in a different diagonal direction' do
+      @game.active_player = @game.player1
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(2, @game.player2)
+      @game.put_piece_in_column(2, @game.player1)
+      @game.put_piece_in_column(3, @game.player2)
+      @game.put_piece_in_column(3, @game.player1)
+      @game.put_piece_in_column(3, @game.player1)
+      @game.put_piece_in_column(4, @game.player2)
+      @game.put_piece_in_column(4, @game.player2)
+      @game.put_piece_in_column(4, @game.player2)
+      @game.put_piece_in_column(4, @game.player1)
+      @game.active_player.winning_patterns(@game.board.grid)
+      expect(@game.winning_pattern_detected?).to eq true
+    end
+
+    it 'does not error if checking a combination near the edge of the board' do
+      @game.active_player = @game.player1
+      @game.put_piece_in_column(7, @game.player1)
+      @game.put_piece_in_column(6, @game.player2)
+      @game.put_piece_in_column(6, @game.player1)
+      @game.put_piece_in_column(5, @game.player2)
+      @game.put_piece_in_column(5, @game.player1)
+      @game.put_piece_in_column(5, @game.player1)
+      @game.active_player.winning_patterns(@game.board.grid)
+      expect(@game.winning_pattern_detected?).to eq false
+    end
+
+    it 'returns false if there is no diagonal win' do
+      @game.active_player = @game.player1
+      @game.put_piece_in_column(2, @game.player1)
+      @game.put_piece_in_column(2, @game.player2)
+      @game.put_piece_in_column(3, @game.player1)
+      @game.put_piece_in_column(4, @game.player2)
+      @game.put_piece_in_column(4, @game.player1)
+      @game.put_piece_in_column(7, @game.player1)
+      @game.board.display_board
+      @game.active_player.winning_patterns(@game.board.grid)
+      expect(@game.winning_pattern_detected?).to eq false
     end
   end
 end

@@ -16,7 +16,9 @@ class Game
   end
 
   def winning_pattern_detected?
-    board.scan_cells(active_player)
+    return true if board.scan_diagonal_cells(active_player)
+
+    false
   end
 
   def put_piece_in_column(col_num, player)
