@@ -4,6 +4,7 @@ require 'colorize'
 require 'pry'
 require_relative 'cell'
 
+# Represent the yellow counters from connect4 game
 class YellowPiece
   attr_reader :color
   def initialize
@@ -16,6 +17,7 @@ class YellowPiece
   end
 end
 
+# Represent the red counters from connect4 game
 class RedPiece
   attr_reader :color
   def initialize

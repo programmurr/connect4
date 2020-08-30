@@ -4,8 +4,11 @@ require_relative 'board'
 require_relative 'player'
 require_relative 'piece'
 require_relative 'cell'
+require_relative 'win_check'
 
+# Will send messages to the other classes, triggering game logic checks
 class Game
+  include WinCheck
   attr_accessor :board, :player1, :player2, :active_player
 
   def initialize(board: Board.new, player1: Player.new(1), player2: Player.new(2))
@@ -16,7 +19,7 @@ class Game
   end
 
   def winning_pattern_detected?
-    return true if board.scan_diagonal_cells(active_player)
+    return true if scan_diagonal_cells(active_player, board.grid) # WinCheck module method
 
     false
   end

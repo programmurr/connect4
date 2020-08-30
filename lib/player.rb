@@ -4,8 +4,9 @@ require_relative 'piece'
 require_relative 'board'
 require_relative 'cell'
 
+# Will represent players of the game. 2 objects of this class will be initialized for eveyr game
 class Player
-  attr_accessor :name, :piece, :possible_win_combos, :placement, :win_combo
+  attr_accessor :name, :piece, :placement
 
   def initialize(num)
     @name = "Player#{num}"
