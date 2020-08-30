@@ -2,6 +2,19 @@
 
 # Contains and operates the logic for identifying win conditions
 module WinCheck
+  def scan_horizontal_cells(active_player, grid)
+    grid.each do |row|
+      row.each do |cell|
+        if cell.value
+          return true if horizontal_win?(cell.co_ord[0] - 1, cell.co_ord[1] - 1, active_player, grid)
+        else
+          next
+        end
+      end
+    end
+    false
+  end
+
   def scan_vertical_cells(active_player, grid)
     grid.each do |row|
       row.each do |cell|
@@ -28,6 +41,11 @@ module WinCheck
     false
   end
 
+  def horizontal_win?(x_co_ord, y_co_ord, active_player, grid)
+    horizontal_array = make_horizontal_array(x_co_ord, y_co_ord, grid)
+    return true if win_check?(horizontal_array, active_player)
+  end
+
   def vertical_win?(x_co_ord, y_co_ord, active_player, grid)
     vertical_array = make_vertical_array(x_co_ord, y_co_ord, grid)
     return true if win_check?(vertical_array, active_player)
@@ -39,6 +57,16 @@ module WinCheck
 
     return true if win_check?(down_right, active_player)
     return true if win_check?(down_left, active_player)
+  end
+
+  def make_horizontal_array(x_co_ord, y_co_ord, grid, horizontal_array = [], z_co_ord = y_co_ord + 3)
+    y_co_ord.upto(z_co_ord) do
+      break if y_co_ord > 6
+
+      horizontal_array << grid[x_co_ord][y_co_ord]
+      y_co_ord += 1
+    end
+    horizontal_array
   end
 
   def make_vertical_array(x_co_ord, y_co_ord, grid, vertical_array = [], z_co_ord = x_co_ord + 3)
@@ -81,8 +109,6 @@ module WinCheck
         next
       end
     end
-    return true if counter == 4
-
-    false
+    counter == 4
   end
 end

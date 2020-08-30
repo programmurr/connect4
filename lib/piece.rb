@@ -2,7 +2,6 @@
 
 require 'colorize'
 require 'pry'
-require_relative 'cell'
 
 # Represent the yellow counters from connect4 game
 class YellowPiece

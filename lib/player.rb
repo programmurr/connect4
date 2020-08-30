@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'piece'
-require_relative 'board'
-require_relative 'cell'
 
 # Will represent players of the game. 2 objects of this class will be initialized for eveyr game
 class Player

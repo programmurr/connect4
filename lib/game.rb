@@ -21,6 +21,7 @@ class Game
   def winning_pattern_detected?
     return true if scan_diagonal_cells(active_player, board.grid) # WinCheck module method
     return true if scan_vertical_cells(active_player, board.grid) # WinCheck module method
+    return true if scan_horizontal_cells(active_player, board.grid) # WinCheck module method
 
     false
   end

@@ -2,8 +2,6 @@
 
 require 'pry'
 require_relative 'cell'
-require_relative 'piece'
-require_relative 'game'
 
 # Represents the board of a connect 4 game
 # Consists of cells with no value, within which yellow or red pieces can be placed
