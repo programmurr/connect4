@@ -37,4 +37,22 @@ describe Player do
       expect(@player1.piece).to be_instance_of(RedPiece)
     end
   end
+
+  context '#change_name' do
+    before do
+      $stdin = StringIO.new("Steve\n")
+    end
+
+    after do
+      $stdin = STDIN
+    end
+
+    it 'lets player1 change their name' do
+      expect { @player1.change_name }.to change(@player1, :name).from('Player1').to('Steve')
+    end
+
+    it 'lets player2 change their name' do
+      expect { @player2.change_name }.to change(@player2, :name).from('Player2').to('Steve')
+    end
+  end
 end

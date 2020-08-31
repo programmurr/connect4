@@ -2,7 +2,7 @@
 
 require_relative 'piece'
 
-# Will represent players of the game. 2 objects of this class will be initialized for eveyr game
+# Will represent players of the game. 2 objects of this class will be initialized for every game
 class Player
   attr_accessor :name, :piece, :placement
 
@@ -10,6 +10,11 @@ class Player
     @name = "Player#{num}"
     @piece = nil
     @placement = {}
+  end
+
+  def change_name
+    puts "\n#{name}, please enter your name"
+    @name = $stdin.gets.chomp.to_s
   end
 
   def tag_piece(cell)

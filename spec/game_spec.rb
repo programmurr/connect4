@@ -267,4 +267,52 @@ describe Game do
       expect(game.draw?).to eq false
     end
   end
+
+  context '#coin_toss' do
+    let(:subject) { Game.new }
+    it 'flips a virtual coin which will can return 0' do
+      expect(subject).to receive(:rand).and_return(0)
+      expect(subject.coin_toss).to eq 0
+    end
+
+    it 'flips a virtual coin which will can return 1' do
+      expect(subject).to receive(:rand).and_return(1)
+      expect(subject.coin_toss).to eq 1
+    end
+
+    it "if it returns 0, it will print 'Heads!' to console" do
+      expect(subject).to receive(:rand).and_return(0)
+      expect { subject.coin_toss }.to output("Tossing the coin...\nHeads!\n").to_stdout
+    end
+
+    it "if it returns 1, it will print 'Tails!' to console" do
+      expect(subject).to receive(:rand).and_return(1)
+      expect { subject.coin_toss }.to output("Tossing the coin...\nTails!\n").to_stdout
+    end
+
+    it 'will not receive unexpected numbers' do
+      expect(subject).to receive(:rand).and_return(3)
+      expect { subject.coin_toss }.to_not output("Tails!\n").to_stdout
+    end
+
+    it 'will not print a word that is not heads or tails' do
+      expect(subject).to receive(:rand).and_return(1)
+      expect { subject.coin_toss }.to_not output("Fries!!\n").to_stdout
+    end
+  end
+
+  context '#display_header' do
+    it 'displays the title of the game at the top' do
+      game = Game.new
+      expect { game.display_header }.to output("<<<< Connect4 >>>>\n").to_stdout
+    end
+  end
+
+  context '#instruction' do
+    it 'tells the active player to put their piece in a row column between 1 and 7' do
+      game = Game.new
+      game.active_player = game.player1
+      expect { game.instruction(game.active_player.name) }.to output("Player1, enter the number of the column you want to place your piece, then press enter\n").to_stdout
+    end
+  end
 end
