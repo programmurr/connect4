@@ -9,13 +9,26 @@ require_relative 'win_check'
 # Will send messages to the other classes, triggering game logic checks
 class Game
   include WinCheck
-  attr_accessor :board, :player1, :player2, :active_player
+  attr_accessor :board, :player1, :player2, :active_player, :next_player
 
   def initialize(board: Board.new, player1: Player.new(1), player2: Player.new(2))
     @board = board
     @player1 = player1
     @player2 = player2
     @active_player = nil
+    @next_player = nil
+  end
+
+  def draw?
+    return true if winning_pattern_detected? == false && board.full?
+
+    false
+  end
+
+  def switch_active_player
+    temp = active_player
+    self.active_player = next_player
+    self.next_player = temp
   end
 
   def winning_pattern_detected?

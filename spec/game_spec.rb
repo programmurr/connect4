@@ -25,6 +25,36 @@ describe Game do
     end
   end
 
+  context '#active_player' do
+    it 'can be set to the player1 object' do
+      game = Game.new
+      game.active_player = game.player1
+      expect(game.active_player).to be_instance_of(Player)
+    end
+
+    it 'can retrieve properties from the player object' do
+      game = Game.new
+      game.active_player = game.player2
+      expect(game.active_player.name). to eq 'Player2'
+    end
+  end
+
+  context '#switch_active_player' do
+    it 'changes the active player from player1 to player 2' do
+      game = Game.new
+      game.active_player = game.player1
+      game.next_player = game.player2
+      expect { game.switch_active_player }.to change(game, :active_player).from(game.player1).to(game.player2)
+    end
+
+    it 'changes the active player from player2 to player 1' do
+      game = Game.new
+      game.active_player = game.player2
+      game.next_player = game.player1
+      expect { game.switch_active_player }.to change(game, :active_player).from(game.player2).to(game.player1)
+    end
+  end
+
   context '#put_piece_in_row' do
     before(:each) do
       @game = Game.new
@@ -166,6 +196,75 @@ describe Game do
       @game.put_piece_in_column(4, @game.player1)
       @game.put_piece_in_column(7, @game.player1)
       expect(@game.winning_pattern_detected?).to eq false
+    end
+  end
+
+  context '#draw?' do
+    it 'returns true if the game board is fully occupied and no winning combination is detected' do
+      game = Game.new
+      game.board.set_cell_coordinates
+      game.player1.assign_yellow_piece
+      game.player2.assign_red_piece
+      game.active_player = game.player1
+      game.put_piece_in_column(1, game.player1)
+      game.put_piece_in_column(2, game.player1)
+      game.put_piece_in_column(3, game.player2)
+      game.put_piece_in_column(4, game.player2)
+      game.put_piece_in_column(5, game.player1)
+      game.put_piece_in_column(6, game.player1)
+      game.put_piece_in_column(7, game.player2)
+      game.put_piece_in_column(1, game.player2)
+      game.put_piece_in_column(2, game.player2)
+      game.put_piece_in_column(3, game.player1)
+      game.put_piece_in_column(4, game.player2)
+      game.put_piece_in_column(5, game.player1)
+      game.put_piece_in_column(6, game.player1)
+      game.put_piece_in_column(7, game.player1)
+      game.put_piece_in_column(1, game.player1)
+      game.put_piece_in_column(2, game.player2)
+      game.put_piece_in_column(3, game.player1)
+      game.put_piece_in_column(4, game.player1)
+      game.put_piece_in_column(5, game.player1)
+      game.put_piece_in_column(6, game.player2)
+      game.put_piece_in_column(7, game.player2)
+      game.put_piece_in_column(1, game.player1)
+      game.put_piece_in_column(2, game.player2)
+      game.put_piece_in_column(3, game.player2)
+      game.put_piece_in_column(4, game.player1)
+      game.put_piece_in_column(5, game.player2)
+      game.put_piece_in_column(6, game.player1)
+      game.put_piece_in_column(7, game.player1)
+      game.put_piece_in_column(1, game.player2)
+      game.put_piece_in_column(2, game.player1)
+      game.put_piece_in_column(3, game.player2)
+      game.put_piece_in_column(4, game.player1)
+      game.put_piece_in_column(5, game.player2)
+      game.put_piece_in_column(6, game.player1)
+      game.put_piece_in_column(7, game.player2)
+      game.put_piece_in_column(1, game.player1)
+      game.put_piece_in_column(2, game.player2)
+      game.put_piece_in_column(3, game.player1)
+      game.put_piece_in_column(4, game.player2)
+      game.put_piece_in_column(5, game.player1)
+      game.put_piece_in_column(6, game.player2)
+      game.put_piece_in_column(7, game.player1)
+      expect(game.draw?).to eq true
+    end
+
+    it 'returns false if the game board is not fully occupied and no winning combination is detected' do
+      game = Game.new
+      game.board.set_cell_coordinates
+      game.player1.assign_yellow_piece
+      game.player2.assign_red_piece
+      game.active_player = game.player1
+      game.put_piece_in_column(1, game.player1)
+      game.put_piece_in_column(2, game.player1)
+      game.put_piece_in_column(3, game.player2)
+      game.put_piece_in_column(4, game.player2)
+      game.put_piece_in_column(5, game.player1)
+      game.put_piece_in_column(6, game.player1)
+      game.put_piece_in_column(7, game.player2)
+      expect(game.draw?).to eq false
     end
   end
 end
