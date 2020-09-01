@@ -6,6 +6,7 @@ require_relative 'piece'
 require_relative 'cell'
 require_relative 'win_check'
 require_relative 'interface'
+require 'pry'
 
 # Will send messages to the other classes, triggering game logic checks
 class Game
@@ -40,6 +41,7 @@ class Game
       board.display_board
       instruction(active_player.name)
       put_piece_in_column(column_number, active_player)
+      # binding.pry
       if winning_pattern_detected?
         system 'clear'
         board.display_board
@@ -99,6 +101,7 @@ class Game
   end
 
   def winning_pattern_detected?
+    # binding.pry
     return true if scan_diagonal_cells(active_player, board.grid) # WinCheck
     return true if scan_vertical_cells(active_player, board.grid) # WinCheck
     return true if scan_horizontal_cells(active_player, board.grid) # WinCheck

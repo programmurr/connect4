@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'colorize'
-require 'pry'
 
 # Represent the yellow counters from connect4 game
 class YellowPiece

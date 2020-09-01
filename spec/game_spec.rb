@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'pry'
 require_relative '../lib/game'
 
 describe Game do
@@ -197,6 +198,38 @@ describe Game do
       @game.put_piece_in_column(7, @game.player1)
       expect(@game.winning_pattern_detected?).to eq false
     end
+
+    it 'THE DUFUS TEST - only declares win if there are 4 in a row of the same color in any direction' do
+      game = Game.new
+      game.board.set_cell_coordinates
+      game.player1.assign_yellow_piece
+      game.player2.assign_red_piece
+      game.active_player = game.player1
+      game.put_piece_in_column(1, game.player1)
+      game.put_piece_in_column(1, game.player1)
+      game.put_piece_in_column(1, game.player2)
+      game.put_piece_in_column(1, game.player2)
+      game.put_piece_in_column(2, game.player2)
+      game.put_piece_in_column(2, game.player2)
+      game.put_piece_in_column(2, game.player1)
+      game.put_piece_in_column(2, game.player2)
+      game.put_piece_in_column(3, game.player1)
+      game.put_piece_in_column(3, game.player2)
+      game.put_piece_in_column(4, game.player1)
+      game.put_piece_in_column(4, game.player1)
+      game.put_piece_in_column(4, game.player2)
+      game.put_piece_in_column(4, game.player2)
+      game.put_piece_in_column(4, game.player1)
+      game.put_piece_in_column(5, game.player1)
+      game.put_piece_in_column(5, game.player2)
+      game.put_piece_in_column(6, game.player2)
+      game.put_piece_in_column(6, game.player1)
+      game.put_piece_in_column(7, game.player1)
+      game.put_piece_in_column(7, game.player2)
+      game.put_piece_in_column(7, game.player1)
+      # binding.pry
+      expect(game.winning_pattern_detected?).to eq false
+    end
   end
 
   context '#draw?' do
@@ -312,7 +345,7 @@ describe Game do
     it 'tells the active player to put their piece in a row column between 1 and 7' do
       game = Game.new
       game.active_player = game.player1
-      expect { game.instruction(game.active_player.name) }.to output("Player1, enter the number of the column you want to place your piece, then press enter\n").to_stdout
+      expect { game.instruction(game.active_player.name) }.to output("\nPlayer1, enter the number of the column you want to place your piece, then press enter\n").to_stdout
     end
   end
 end

@@ -4,7 +4,7 @@
 module Interface
   def display_header
     system 'clear'
-    puts '<<<< Connect4 >>>>'
+    puts '<<<< Connect4 v1.1 Dufus-proof >>>>'
   end
 
   def coin_toss_message(name)

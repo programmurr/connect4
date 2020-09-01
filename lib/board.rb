@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require 'pry'
 require_relative 'cell'
 
-# Represents the board of a connect 4 game
+# Represents the board of a connect4 game
 # Consists of cells with no value, within which yellow or red pieces can be placed
 class Board
   COLUMNS = {

@@ -32,7 +32,7 @@ module WinCheck
     grid.each do |row|
       row.each do |cell|
         if cell.value
-          return true if diagonal_win?(cell.co_ord[0] - 1, cell.co_ord[1] + 2, active_player, grid)
+          return true if diagonal_win?(cell.co_ord[0] - 1, cell.co_ord[1] - 1, active_player, grid)
         else
           next
         end
@@ -79,22 +79,24 @@ module WinCheck
     vertical_array
   end
 
-  def make_down_left_array(x_co_ord, y_co_ord, grid, z_co_ord = x_co_ord + 1, down_left = [])
-    x_co_ord.upto(y_co_ord) do
-      break if x_co_ord > 5
+  def make_down_left_array(x_co_ord, y_co_ord, grid, down_left = [])
+    4.times do
+      break if x_co_ord > 5 || y_co_ord.negative?
 
-      down_left << grid[x_co_ord][z_co_ord]
+      down_left << grid[x_co_ord][y_co_ord]
       x_co_ord += 1
-      z_co_ord -= 1
+      y_co_ord -= 1
     end
     down_left
   end
 
   def make_down_right_array(x_co_ord, y_co_ord, grid, down_right = [])
-    x_co_ord.upto(y_co_ord) do |num|
-      break if num > 5
+    4.times do
+      break if x_co_ord > 5 || y_co_ord > 6
 
-      down_right << grid[num][num + 1]
+      down_right << grid[x_co_ord][y_co_ord]
+      x_co_ord += 1
+      y_co_ord += 1
     end
     down_right
   end
