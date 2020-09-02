@@ -55,7 +55,7 @@ module Interface
   def column_number
     loop do
       column_number = gets.chomp.to_i
-      if column_number > 0 && column_number < 8
+      if column_number.positive? && column_number < 8
         return column_number
       else
         puts 'Please write a number between 1 and 7, then press enter'

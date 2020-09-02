@@ -62,7 +62,7 @@ class Board
   end
 
   # BEWARE - I accidentally set the x and y coords in reverse.
-  # So after the below function is run, y is actually first in all cell/board coords
+  # So after the below function is run, y is actually first in all cell/board class co_ords (not the grid array)
   # Sorry. Was in too deep before realizing this
   def set_cell_coordinates
     x = 0
