@@ -4,12 +4,11 @@ require_relative 'piece'
 
 # Will represent players of the game. 2 objects of this class will be initialized for every game
 class Player
-  attr_accessor :name, :piece, :placement
+  attr_accessor :name, :piece
 
   def initialize(num)
     @name = "Player#{num}"
     @piece = nil
-    @placement = {}
   end
 
   def change_name

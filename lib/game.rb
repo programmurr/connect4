@@ -34,52 +34,8 @@ class Game
     gameplay
   end
 
-  def win_process
-    system 'clear'
-    board.display_board
-    victory_message(active_player.name) # Interface
-  end
-
-  def draw_process
-    system 'clear'
-    board.display_board
-    draw_message # Interface
-  end
-
-  def reset_display
-    system 'clear'
-    board.display_board
-  end
-
-  def gameplay
-    loop do
-      reset_display
-      instruction(active_player.name)
-      put_piece_in_column(column_number, active_player) # Interface
-      return win_process if winning_pattern_detected?
-      return draw_process if draw?
-
-      switch_active_player
-    end
-  end
-
-  def player1_as_active_player
-    self.active_player = player1
-    self.next_player = player2
-  end
-
-  def player2_as_active_player
-    self.active_player = player2
-    self.next_player = player1
-  end
-
-  def set_player_pieces
-    active_player.assign_yellow_piece
-    next_player.assign_red_piece
-  end
-
   def player_setup
-    if coin_toss_choice == coin_toss # Interface
+    if coin_toss_choice == coin_toss # coin_toss_choice in Interface
       player1_coin_win(player1.name, player2.name) # Interface
       player1_as_active_player
     else
@@ -100,34 +56,75 @@ class Game
     end
   end
 
-  def draw?
-    return true if winning_pattern_detected? == false && board.full?
+  def player1_as_active_player
+    self.active_player = player1
+    self.next_player = player2
+  end
 
-    false
+  def player2_as_active_player
+    self.active_player = player2
+    self.next_player = player1
+  end
+
+  def set_player_pieces
+    active_player.assign_yellow_piece
+    next_player.assign_red_piece
+  end
+
+  def gameplay
+    loop do
+      reset_display
+      instruction(active_player.name) # Interface
+      put_piece_in_column(column_choice, active_player)
+      return win_process if winning_pattern_detected?
+      return draw_process if draw?
+
+      switch_active_player
+    end
+  end
+
+  def reset_display
+    system 'clear'
+    board.display_board
+  end
+
+  def column_choice
+    loop do
+      choice = choose_column_number # Interface
+      column = board.get_column(choice)
+      return choice if board.column_full?(column) == false
+    end
+  end
+
+  def put_piece_in_column(col_num, player)
+    board.get_column(col_num).map do |cell|
+      return cell.value = player.piece if cell.value.nil?
+    end
+  end
+
+  def winning_pattern_detected?
+    win_detected?(active_player, board.grid) ? true : false # WinCheck
+  end
+
+  def win_process
+    system 'clear'
+    board.display_board
+    victory_message(active_player.name) # Interface
+  end
+
+  def draw?
+    winning_pattern_detected? == false && board.full? ? true : false
+  end
+
+  def draw_process
+    system 'clear'
+    board.display_board
+    draw_message # Interface
   end
 
   def switch_active_player
     temp = active_player
     self.active_player = next_player
     self.next_player = temp
-  end
-
-  def winning_pattern_detected?
-    return true if win_detected?(active_player, board.grid) # WinCheck
-
-    false
-  end
-
-  def put_piece_in_column(col_num, player)
-    board.get_column(col_num).map do |cell|
-      if cell.value.nil?
-        cell.value = player.piece
-        player.tag_piece(cell)
-        break
-      elsif board.column_full?(board.get_column(col_num)) == true
-        puts 'The column is full!'
-        break
-      end
-    end
   end
 end

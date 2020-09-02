@@ -47,7 +47,7 @@ module Interface
     end
   end
 
-  def column_number
+  def choose_column_number
     loop do
       column_number = gets.chomp.to_i
       return column_number if column_number.positive? && column_number < 8

@@ -2,7 +2,8 @@
 
 # Makes arrays of grid cells for WinCheck module to verify winning patterns
 class ArrayMaker
-  def horizontal_array(x_co_ord, y_co_ord, grid, array = [])
+  def self.horizontal_array(x_co_ord, y_co_ord, grid)
+    array = []
     4.times do
       break if y_co_ord > 6
 
@@ -12,7 +13,8 @@ class ArrayMaker
     array
   end
 
-  def vertical_array(x_co_ord, y_co_ord, grid, array = [])
+  def self.vertical_array(x_co_ord, y_co_ord, grid)
+    array = []
     4.times do
       break if x_co_ord > 5
 
@@ -22,7 +24,8 @@ class ArrayMaker
     array
   end
 
-  def down_left_array(x_co_ord, y_co_ord, grid, array = [])
+  def self.down_left_array(x_co_ord, y_co_ord, grid)
+    array = []
     4.times do
       break if x_co_ord > 5 || y_co_ord.negative?
 
@@ -33,7 +36,8 @@ class ArrayMaker
     array
   end
 
-  def down_right_array(x_co_ord, y_co_ord, grid, array = [])
+  def self.down_right_array(x_co_ord, y_co_ord, grid)
+    array = []
     4.times do
       break if x_co_ord > 5 || y_co_ord > 6
 

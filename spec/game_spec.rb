@@ -74,17 +74,6 @@ describe Game do
       @game.put_piece_in_column(1, @game.player2)
       expect(@game.board.grid[4][0].value).to be_instance_of(RedPiece)
     end
-
-    it 'does not place a piece and outputs a message if the column is full' do
-      @game.put_piece_in_column(2, @game.player1)
-      @game.put_piece_in_column(2, @game.player2)
-      @game.put_piece_in_column(2, @game.player1)
-      @game.put_piece_in_column(2, @game.player2)
-      @game.put_piece_in_column(2, @game.player1)
-      @game.put_piece_in_column(2, @game.player2)
-      @game.put_piece_in_column(2, @game.player1)
-      expect { @game.put_piece_in_column(2, @game.player2) }.to output("The column is full!\n").to_stdout
-    end
   end
 
   context '#winning_pattern_detected?' do

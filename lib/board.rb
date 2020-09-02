@@ -31,23 +31,23 @@ class Board
   end
 
   def column_full?(column)
-    if column[5].value.nil?
-      false
-    else
-      true
-    end
+    return false if column[5].value.nil?
+
+    puts 'The column is full!'
+    sleep 3
+    true
   end
 
   def get_column(num)
-    stack = []
+    column = []
     COLUMNS.fetch(num).reverse.each do |position|
       grid.each do |row|
         row.each do |cell|
-          stack << cell if cell.co_ord == position
+          column << cell if cell.co_ord == position
         end
       end
     end
-    stack
+    column
   end
 
   def display_board

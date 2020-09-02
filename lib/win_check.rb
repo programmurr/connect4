@@ -1,25 +1,21 @@
 # frozen_string_literal: true
 
 require_relative 'array_maker'
-# I think array_maker might belong in grid?
+
 # Contains and operates the logic for identifying win conditions
 module WinCheck
   def win_detected?(active_player, grid)
     grid.each do |row|
       row.each do |cell|
         next unless cell.value
-        if win_check?(ArrayMaker.new.horizontal_array(cell.co_ord[0] - 1, cell.co_ord[1] - 1, grid), active_player)
-          return true
-        end
-        if win_check?(ArrayMaker.new.vertical_array(cell.co_ord[0] - 1, cell.co_ord[1] - 1, grid), active_player)
-          return true
-        end
-        if win_check?(ArrayMaker.new.down_left_array(cell.co_ord[0] - 1, cell.co_ord[1] - 1, grid), active_player)
-          return true
-        end
-        if win_check?(ArrayMaker.new.down_right_array(cell.co_ord[0] - 1, cell.co_ord[1] - 1, grid), active_player)
-          return true
-        end
+
+        x_co_ord = cell.co_ord[0] - 1
+        y_co_ord = cell.co_ord[1] - 1
+        # return true if win_check?(ArrayMaker.array(x_co_ord, y_co_ord, grid), active_player)
+        return true if win_check?(ArrayMaker.horizontal_array(x_co_ord, y_co_ord, grid), active_player)
+        return true if win_check?(ArrayMaker.vertical_array(x_co_ord, y_co_ord, grid), active_player)
+        return true if win_check?(ArrayMaker.down_left_array(x_co_ord, y_co_ord, grid), active_player)
+        return true if win_check?(ArrayMaker.down_right_array(x_co_ord, y_co_ord, grid), active_player)
       end
     end
     false
