@@ -337,7 +337,7 @@ describe Game do
   context '#display_header' do
     it 'displays the title of the game at the top' do
       game = Game.new
-      expect { game.display_header }.to output("<<<< Connect4 >>>>\n").to_stdout
+      expect { game.display_header }.to output("<<<< Connect4 v1.1 Dufus-proof >>>>\n").to_stdout
     end
   end
 

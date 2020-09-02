@@ -6,7 +6,6 @@ require_relative 'piece'
 require_relative 'cell'
 require_relative 'win_check'
 require_relative 'interface'
-require 'pry'
 
 # Will send messages to the other classes, triggering game logic checks
 class Game
@@ -35,28 +34,43 @@ class Game
     gameplay
   end
 
+  def win_process
+    system 'clear'
+    board.display_board
+    victory_message(active_player.name) # Interface
+  end
+
+  def draw_process
+    system 'clear'
+    board.display_board
+    draw_message # Interface
+  end
+
+  def reset_display
+    system 'clear'
+    board.display_board
+  end
+
   def gameplay
     loop do
-      system 'clear'
-      board.display_board
+      reset_display
       instruction(active_player.name)
       put_piece_in_column(column_number, active_player)
-      # binding.pry
-      if winning_pattern_detected?
-        system 'clear'
-        board.display_board
-        victory_message(active_player.name) # Interface
-        break
-      end
-      if draw?
-        system 'clear'
-        board.display_board
-        draw_message # Interface
-        break
-      end
+      return win_process if winning_pattern_detected?
+      return draw_process if draw?
 
       switch_active_player
     end
+  end
+
+  def player1_as_active_player
+    self.active_player = player1
+    self.next_player = player2
+  end
+
+  def player2_as_active_player
+    self.active_player = player2
+    self.next_player = player1
   end
 
   def set_player_pieces
@@ -67,12 +81,10 @@ class Game
   def player_setup
     if coin_toss_choice == coin_toss # Interface
       player1_coin_win(player1.name, player2.name) # Interface
-      self.active_player = player1
-      self.next_player = player2
+      player1_as_active_player
     else
       player2_coin_win(player1.name, player2.name) # Interface
-      self.active_player = player2
-      self.next_player = player1
+      player2_as_active_player
     end
   end
 
@@ -101,7 +113,6 @@ class Game
   end
 
   def winning_pattern_detected?
-    # binding.pry
     return true if scan_diagonal_cells(active_player, board.grid) # WinCheck
     return true if scan_vertical_cells(active_player, board.grid) # WinCheck
     return true if scan_horizontal_cells(active_player, board.grid) # WinCheck
