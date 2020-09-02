@@ -15,10 +15,10 @@
 
 #### Current status:
 
-- Most major refactoring is complete. Just need to work on that unholy `win_detected?` method in `WinCheck` module
-- Possible ways of improving it are:
-1. Create a factory method that makes subclasses of `ArrayMaker` e.g. `HorizontalArrayMaker`
- - This subclass is then scanned by `win_check?`
- - That just seems to move the conditional, complicated code elsewhere though
-2. Combine all arrays together so they are nested, then `win_check` scans all those arrays in one go
- - The commented wish code on line 14 alludes to this solution
+- Complete! All major refactorings finished. 100% there is major room for improvement in terms of overall design, but rubocop is at zero and I successfully applied refactoring techniques gained from the books above. It's a good step forward at least
+
+#### Lessons learned / Things to work on: 
+
+- TDD coverage was not at 100% due to the `ArrayMaker` class and `WinCheck` module created to assist the public API
+- I noticed that, when the project began, methods that would otherwise be private are being tested e.g. `Board#set_cell_coordinates`
+- Is it necessary to make those methods private later, after testing, then change tests so that they only test public methods? Find out before starting Chess
