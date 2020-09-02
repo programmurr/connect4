@@ -6,7 +6,6 @@ require 'colorize'
 class YellowPiece
   attr_reader :color
   def initialize
-    super
     @color = 'yellow'
   end
 
@@ -19,7 +18,6 @@ end
 class RedPiece
   attr_reader :color
   def initialize
-    super
     @color = 'red'
   end
 

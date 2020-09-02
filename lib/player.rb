@@ -16,10 +16,6 @@ class Player
     @name = $stdin.gets.chomp.to_s
   end
 
-  def tag_piece(cell)
-    placement[placement.length + 1] = cell
-  end
-
   def assign_yellow_piece
     self.piece = YellowPiece.new
   end

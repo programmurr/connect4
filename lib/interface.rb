@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 # Contains strings and triggers for user interaciton
-module Interface
+module UserInterface
   def display_header
     system 'clear'
-    puts '<<<< Connect4 v1.1 Dufus-proof >>>>'
+    puts '<<<< Connect4 v1.2 - "Refactored Dufus" >>>>'
   end
 
   def coin_toss_message(name)

@@ -2,15 +2,13 @@
 
 require_relative 'board'
 require_relative 'player'
-require_relative 'piece'
-require_relative 'cell'
 require_relative 'win_check'
 require_relative 'interface'
 
-# Will send messages to the other classes, triggering game logic checks
+# Runs the game. Will send messages to the other classes, triggering game logic checks
 class Game
   include WinCheck
-  include Interface
+  include UserInterface
 
   attr_accessor :board, :player1, :player2, :active_player, :next_player
 
@@ -23,23 +21,23 @@ class Game
   end
 
   def setup
-    display_header # Interface
+    display_header # UserInterface
     player1.change_name
     player2.change_name
-    coin_toss_message(player1.name) # Interface
+    coin_toss_message(player1.name) # UserInterface
     player_setup
     set_player_pieces
     board.set_cell_coordinates
-    enter_ready_to_proceed # Interface
+    enter_ready_to_proceed # UserInterface
     gameplay
   end
 
   def player_setup
     if coin_toss_choice == coin_toss # coin_toss_choice in Interface
-      player1_coin_win(player1.name, player2.name) # Interface
+      player1_coin_win(player1.name, player2.name) # UserInterface
       player1_as_active_player
     else
-      player2_coin_win(player1.name, player2.name) # Interface
+      player2_coin_win(player1.name, player2.name) # UserInterface
       player2_as_active_player
     end
   end
@@ -74,7 +72,7 @@ class Game
   def gameplay
     loop do
       reset_display
-      instruction(active_player.name) # Interface
+      instruction(active_player.name) # UserInterface
       put_piece_in_column(column_choice, active_player)
       return win_process if winning_pattern_detected?
       return draw_process if draw?
@@ -90,7 +88,7 @@ class Game
 
   def column_choice
     loop do
-      choice = choose_column_number # Interface
+      choice = choose_column_number # UserInterface
       column = board.get_column(choice)
       return choice if board.column_full?(column) == false
     end
@@ -109,7 +107,7 @@ class Game
   def win_process
     system 'clear'
     board.display_board
-    victory_message(active_player.name) # Interface
+    victory_message(active_player.name) # UserInterface
   end
 
   def draw?
@@ -119,7 +117,7 @@ class Game
   def draw_process
     system 'clear'
     board.display_board
-    draw_message # Interface
+    draw_message # UserInterface
   end
 
   def switch_active_player
