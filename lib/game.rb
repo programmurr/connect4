@@ -55,7 +55,7 @@ class Game
     loop do
       reset_display
       instruction(active_player.name)
-      put_piece_in_column(column_number, active_player)
+      put_piece_in_column(column_number, active_player) # Interface
       return win_process if winning_pattern_detected?
       return draw_process if draw?
 

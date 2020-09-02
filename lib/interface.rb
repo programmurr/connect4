@@ -18,14 +18,11 @@ module Interface
   def coin_toss_choice
     loop do
       choice = gets.chomp.to_s.downcase
-      if choice == 'heads'
-        return 0
-      elsif choice == 'tails'
-        return 1
-      else
-        puts "Please write either 'heads' or 'tails' then press enter"
-        sleep 3
-      end
+      return 0 if choice == 'heads'
+      return 1 if choice == 'tails'
+
+      puts "Please write either 'heads' or 'tails' then press enter"
+      sleep 3
     end
   end
 
@@ -44,22 +41,18 @@ module Interface
     puts "Write 'ready' then press enter when you're ready to play"
     loop do
       choice = gets.chomp.to_s.downcase
-      if choice == 'ready'
-        break
-      else
-        puts "Write 'ready' then press enter when you're ready to play"
-      end
+      break if choice == 'ready'
+
+      puts "Write 'ready' then press enter when you're ready to play"
     end
   end
 
   def column_number
     loop do
       column_number = gets.chomp.to_i
-      if column_number.positive? && column_number < 8
-        return column_number
-      else
-        puts 'Please write a number between 1 and 7, then press enter'
-      end
+      return column_number if column_number.positive? && column_number < 8
+
+      puts 'Please write a number between 1 and 7, then press enter'
     end
   end
 
