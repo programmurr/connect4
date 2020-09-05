@@ -337,4 +337,135 @@ describe Game do
       expect { game.instruction(game.active_player.name) }.to output("\nPlayer1, enter the number of the column you want to place your piece, then press enter\n").to_stdout
     end
   end
+
+  context '#end_game_checks' do
+    before(:each) do
+      @game = Game.new
+      @game.board.set_cell_coordinates
+      @game.player1.assign_yellow_piece
+      @game.player2.assign_red_piece
+      @game.active_player = @game.player1
+    end
+
+    it 'exits the game if #winning_patterns_detected? returns true' do
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(2, @game.player1)
+      @game.put_piece_in_column(3, @game.player1)
+      @game.put_piece_in_column(4, @game.player1)
+      expect { @game.end_game_checks }.to raise_error(SystemExit)
+    end
+
+    it 'prints the victory message when #winning_patterns_detected? returns true' do
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(2, @game.player1)
+      @game.put_piece_in_column(3, @game.player1)
+      @game.put_piece_in_column(4, @game.player1)
+      expect { @game.victory_message(@game.active_player.name) }.to output("WOO! Well done #{@game.active_player.name}! You won!\n").to_stdout
+    end
+
+    it 'does not run #win_process if #winning_patterns_detected? returns false' do
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(2, @game.player2)
+      @game.put_piece_in_column(3, @game.player1)
+      @game.put_piece_in_column(4, @game.player2)
+      expect { @game.end_game_checks }.not_to raise_error
+    end
+
+    it 'exits the game if #draw? returns true' do
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(2, @game.player1)
+      @game.put_piece_in_column(3, @game.player2)
+      @game.put_piece_in_column(4, @game.player2)
+      @game.put_piece_in_column(5, @game.player1)
+      @game.put_piece_in_column(6, @game.player1)
+      @game.put_piece_in_column(7, @game.player2)
+      @game.put_piece_in_column(1, @game.player2)
+      @game.put_piece_in_column(2, @game.player2)
+      @game.put_piece_in_column(3, @game.player1)
+      @game.put_piece_in_column(4, @game.player2)
+      @game.put_piece_in_column(5, @game.player1)
+      @game.put_piece_in_column(6, @game.player1)
+      @game.put_piece_in_column(7, @game.player1)
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(2, @game.player2)
+      @game.put_piece_in_column(3, @game.player1)
+      @game.put_piece_in_column(4, @game.player1)
+      @game.put_piece_in_column(5, @game.player1)
+      @game.put_piece_in_column(6, @game.player2)
+      @game.put_piece_in_column(7, @game.player2)
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(2, @game.player2)
+      @game.put_piece_in_column(3, @game.player2)
+      @game.put_piece_in_column(4, @game.player1)
+      @game.put_piece_in_column(5, @game.player2)
+      @game.put_piece_in_column(6, @game.player1)
+      @game.put_piece_in_column(7, @game.player1)
+      @game.put_piece_in_column(1, @game.player2)
+      @game.put_piece_in_column(2, @game.player1)
+      @game.put_piece_in_column(3, @game.player2)
+      @game.put_piece_in_column(4, @game.player1)
+      @game.put_piece_in_column(5, @game.player2)
+      @game.put_piece_in_column(6, @game.player1)
+      @game.put_piece_in_column(7, @game.player2)
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(2, @game.player2)
+      @game.put_piece_in_column(3, @game.player1)
+      @game.put_piece_in_column(4, @game.player2)
+      @game.put_piece_in_column(5, @game.player1)
+      @game.put_piece_in_column(6, @game.player2)
+      @game.put_piece_in_column(7, @game.player1)
+      expect { @game.end_game_checks }.to raise_error(SystemExit)
+    end
+
+    it 'outputs the #draw_message if #draw? returns true' do
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(2, @game.player1)
+      @game.put_piece_in_column(3, @game.player2)
+      @game.put_piece_in_column(4, @game.player2)
+      @game.put_piece_in_column(5, @game.player1)
+      @game.put_piece_in_column(6, @game.player1)
+      @game.put_piece_in_column(7, @game.player2)
+      @game.put_piece_in_column(1, @game.player2)
+      @game.put_piece_in_column(2, @game.player2)
+      @game.put_piece_in_column(3, @game.player1)
+      @game.put_piece_in_column(4, @game.player2)
+      @game.put_piece_in_column(5, @game.player1)
+      @game.put_piece_in_column(6, @game.player1)
+      @game.put_piece_in_column(7, @game.player1)
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(2, @game.player2)
+      @game.put_piece_in_column(3, @game.player1)
+      @game.put_piece_in_column(4, @game.player1)
+      @game.put_piece_in_column(5, @game.player1)
+      @game.put_piece_in_column(6, @game.player2)
+      @game.put_piece_in_column(7, @game.player2)
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(2, @game.player2)
+      @game.put_piece_in_column(3, @game.player2)
+      @game.put_piece_in_column(4, @game.player1)
+      @game.put_piece_in_column(5, @game.player2)
+      @game.put_piece_in_column(6, @game.player1)
+      @game.put_piece_in_column(7, @game.player1)
+      @game.put_piece_in_column(1, @game.player2)
+      @game.put_piece_in_column(2, @game.player1)
+      @game.put_piece_in_column(3, @game.player2)
+      @game.put_piece_in_column(4, @game.player1)
+      @game.put_piece_in_column(5, @game.player2)
+      @game.put_piece_in_column(6, @game.player1)
+      @game.put_piece_in_column(7, @game.player2)
+      @game.put_piece_in_column(1, @game.player1)
+      @game.put_piece_in_column(2, @game.player2)
+      @game.put_piece_in_column(3, @game.player1)
+      @game.put_piece_in_column(4, @game.player2)
+      @game.put_piece_in_column(5, @game.player1)
+      @game.put_piece_in_column(6, @game.player2)
+      @game.put_piece_in_column(7, @game.player1)
+      expect { @game.draw_message }.to output("OOF! Even Stevens! Well done. Play again to decide once and for all...\n").to_stdout
+    end
+
+    it 'does not run #draw_process if #draw? returns false' do
+      @game.put_piece_in_column(7, @game.player1)
+      expect { @game.end_game_checks }.not_to raise_error
+    end
+  end
 end

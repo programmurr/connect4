@@ -74,10 +74,18 @@ class Game
       reset_display
       instruction(active_player.name) # UserInterface
       put_piece_in_column(column_choice, active_player)
-      return win_process if winning_pattern_detected?
-      return draw_process if draw?
-
+      end_game_checks
       switch_active_player
+    end
+  end
+
+  def end_game_checks
+    if winning_pattern_detected?
+      win_process
+      exit
+    elsif draw?
+      draw_process
+      exit
     end
   end
 
