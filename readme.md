@@ -17,6 +17,8 @@
 
 - Complete! All major refactorings finished. 100% there is major room for improvement in terms of overall design, but rubocop is at zero and I successfully applied refactoring techniques gained from the books above. It's a good step forward at least
 
+- View it live on replit: https://repl.it/@programmurr/SolidNoxiousExperiment#main.rb
+
 #### Lessons learned / Things to work on: 
 
 - TDD coverage was not at 100% due to the `ArrayMaker` class and `WinCheck` module created to assist the public API
